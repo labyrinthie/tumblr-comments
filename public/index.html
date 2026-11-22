@@ -81,6 +81,14 @@ fetch("./comments.json")
             username.className = "username";
             username.textContent = comment.username;
 
+            const type = document.createElement("span");
+            type.className = "type";
+            type.textContent = comment.username.toLowerCase() === "heatedalien"
+                ? "reply"
+                : "comment";
+
+            username.appendChild(type);
+
             const text = document.createElement("div");
             text.className = "comment-text";
             text.textContent = comment.text;

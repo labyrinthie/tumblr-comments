@@ -58,7 +58,7 @@ def post_description(post):
     caption = clean_text(post.get("caption", ""))
     summary = clean_text(post.get("summary", ""))
 
-    return title or caption or summary or "Untitled video"
+    return title or caption or summary or "This video"
 
 
 def get_video_posts():

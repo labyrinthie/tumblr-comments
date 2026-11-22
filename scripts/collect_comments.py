@@ -54,17 +54,11 @@ def clean_text(value):
 
 
 def post_description(post):
-    caption = clean_text(post.get("caption", ""))
-
-    if caption:
-        return caption
-
     title = clean_text(post.get("title", ""))
+    caption = clean_text(post.get("caption", ""))
+    summary = clean_text(post.get("summary", ""))
 
-    if title:
-        return title
-
-    return "Video post"
+    return title or caption or summary or "Untitled video"
 
 
 def get_video_posts():

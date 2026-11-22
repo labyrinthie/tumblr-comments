@@ -38,7 +38,10 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
-
+        
+      - name: Check website files
+        run: ls -la public
+        
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comments</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    background: #fff;
+    color: #000;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+#comments {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.comment {
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.type {
+    color: #888;
+    font-size: 11px;
+    margin-left: 6px;
+}
+
+.comment-text {
+    margin: 8px 0;
+}
+
+.post-link {
+    color: #888;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+.post-link:hover {
+    text-decoration: underline;
+}
+
+#status {
+    color: #888;
+}
+</style>
+</head>
+
+<body>
+<div id="comments">
+    <p id="status">Loading comments...</p>
+</div>
+
+<script>
+fetch("./comments.json")
+    .then(response => response.json())
+    .then(comments => {
+        const container = document.getElementById("comments");
+        container.innerHTML = "";
+
+        comments.forEach(comment => {
+            const item = document.createElement("div");
+            item.className = "comment";
+
+            const username = document.createElement("div");
+            username.className = "username";
+            username.textContent = comment.username;
+
+            const type = document.createElement("span");
+            type.className = "type";
+            type.textContent = comment.type === "reply"
+                ? "reply"
+                : "reblog";
+
+            username.appendChild(type);
+
+            const text = document.createElement("div");
+            text.className = "comment-text";
+            text.textContent = comment.text;
+
+            const post = document.createElement("a");
+            post.className = "post-link";
+            post.href = comment.post_url;
+            post.textContent = comment.post_title;
+            post.target = "_blank";
+
+            item.append(username, text, post);
+            container.appendChild(item);
+        });
+    })
+    .catch(() => {
+        document.getElementById("status").textContent =
+            "Could not load comments.";
+    });
+</script>
+</body>
+</html>
